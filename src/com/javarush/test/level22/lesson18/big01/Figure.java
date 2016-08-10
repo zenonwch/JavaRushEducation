@@ -35,14 +35,28 @@ public class Figure {
 		this.matrix = matrix;
 	}
 
-	public void left() {}
-	public void right() {}
-	public void down() {}
-	public void up() {}
-	public void downMaximum() {}
-	public void rotate() {}
+	public void left() {
+	}
+
+	public void right() {
+	}
+
+	public void down() {
+	}
+
+	public void up() {
+	}
+
+	public void downMaximum() {
+	}
+
+	public void rotate() {
+	}
+
 	public boolean isCurrentPositionAvailable() {
 		return false;
 	}
-	public void landed() {}
+
+	public void landed() {
+	}
 }
