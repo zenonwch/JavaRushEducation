@@ -1,3 +1,18 @@
+Задание 5
+Теперь доделаем SnakeDirection.
+а) Переделай его в enum: замени ключевое слово class на enum
+б) Добавь 4 значения UP, DOWN, LEFT, RIGHT
+Должно получиться примерно так:
+public enum  SnakeDirection
+{
+    UP,
+    RIGHT,
+    DOWN,
+    LEFT
+}
+
+
+
 Задание 4
 Отлично. Я еще добавил KeyboardObserver на будущее.
 Пригодится.
