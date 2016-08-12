@@ -16,4 +16,15 @@ public class SnakeSection {
 	public int getY() {
 		return y;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this.getClass() != obj.getClass()) return false;
+		return (this.getX() == ((SnakeSection) obj).getX() && this.getY() == ((SnakeSection) obj).getY());
+	}
+
+	@Override
+	public int hashCode() {
+		return 31*(this.getX() + this.getY());
+	}
 }
