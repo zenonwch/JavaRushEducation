@@ -7,6 +7,12 @@ public class Snake {
 	private boolean isAlive;
 	private SnakeDirection direction;
 
+	public Snake (int x, int y) {
+		sections = new ArrayList<>();
+		sections.add(new SnakeSection(x, y));
+		isAlive = true;
+	}
+
 	public ArrayList<SnakeSection> getSections() {
 		return sections;
 	}
@@ -22,4 +28,14 @@ public class Snake {
 	public void setDirection(SnakeDirection direction) {
 		this.direction = direction;
 	}
+
+	public int getX() {
+		return sections.get(0).getX();
+	}
+
+	public int getY() {
+		return sections.get(0).getY();
+	}
+
+	public void move() {}
 }
