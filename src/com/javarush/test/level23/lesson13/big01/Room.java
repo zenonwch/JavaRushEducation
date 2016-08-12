@@ -4,8 +4,9 @@ public class Room {
 	public static void main(String[] args) {
 		Snake snake = new Snake(1, 1);
 		game = new Room(10, 10, snake);
-
 		game.getSnake().setDirection(SnakeDirection.DOWN);
+		game.createMouse();
+		game.run();
 	}
 	public static Room game;
 
@@ -63,4 +64,6 @@ public class Room {
 	public void run() {}
 
 	public void print() {}
+
+	public void sleep() {}
 }
