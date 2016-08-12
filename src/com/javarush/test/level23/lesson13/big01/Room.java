@@ -2,8 +2,12 @@ package com.javarush.test.level23.lesson13.big01;
 
 public class Room {
 	public static void main(String[] args) {
+		Snake snake = new Snake(1, 1);
+		game = new Room(10, 10, snake);
 
+		game.getSnake().setDirection(SnakeDirection.DOWN);
 	}
+	public static Room game;
 
 	private int width;
 	private int height;
@@ -47,4 +51,8 @@ public class Room {
 	public void setMouse(Mouse mouse) {
 		this.mouse = mouse;
 	}
+
+	public void run() {}
+
+	public void print() {}
 }
