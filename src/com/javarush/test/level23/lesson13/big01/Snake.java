@@ -71,14 +71,21 @@ public class Snake {
 		checkBorders(newHead);
 		//Проверяем - не пересекает ли змея  саму себя
 		checkBody(newHead);
-		//Проверяем - не съела ли змея мышь.
 		//Двигаем змею.
+		if (isAlive) {
+			sections.add(0, newHead);
+			Mouse mouse = Room.game.getMouse();
+			//Проверяем - не съела ли змея мышь.
+			if (newHead.getX() == mouse.getX() && newHead.getY() == mouse.getY()) Room.game.eatMouse();
+			else sections.remove(sections.size() - 1);
+		}
 	}
 
 	/**
 	 * Метод проверяет - находится ли новая голова в пределах комнаты
 	 */
 	private void checkBorders(SnakeSection head) {
+		isAlive = (head.getX() >= 0 && head.getX() < Room.game.getWidth() && head.getY() >= 0 && head.getY() < Room.game.getHeight());
 	}
 
 	/**
