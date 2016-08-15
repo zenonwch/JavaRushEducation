@@ -54,6 +54,12 @@ public class Arcanoid {
 		this.bricks = bricks;
 	}
 
+	public void run() {}
+
+	public void move() {}
+
+	public static Arcanoid game;
+
 	public static void main(String[] args) {
 
 	}
