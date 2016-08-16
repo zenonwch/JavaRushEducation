@@ -1,3 +1,23 @@
+Задание 15
+Не поверишь, но и это еще не все.
+
+Во-первых нужен метод setDirection
+Который не только устанавливает значение переменной direction,
+но и вычисляет новые значения переменных x & y
+Код должен выглядеть примерно так:
+this.direction = direction;
+double angel = Math.toRadians(direction);
+dx = Math.cos(angel) * speed;
+dy = -Math.sin(angel) * speed;
+
+Во-вторых шарик может удариться о стенку.
+При этом он должен от нее отскочить.
+Для этого нам понадобится еще один метод:
+public void checkRebound(int minx, int maxx, int miny, int maxy)
+Создай его, кодом я займусь сам
+
+
+
 Задание 14
 Чего-то не хватает:
 
