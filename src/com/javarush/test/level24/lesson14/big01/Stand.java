@@ -6,12 +6,10 @@ public class Stand extends BaseObject {
 	}
 
 	@Override
-	public void draw() {
-
+	public void draw(Canvas canvas) {
 	}
 
 	@Override
 	public void move() {
-
 	}
 }
