@@ -1,6 +1,6 @@
 package com.javarush.test.level24.lesson14.big01;
 
-public class BaseObject {
+public abstract class BaseObject {
 	private double x;
 	private double y;
 	private double radius;
@@ -33,5 +33,13 @@ public class BaseObject {
 
 	public void setRadius(double radius) {
 		this.radius = radius;
+	}
+
+	public abstract void draw();
+
+	public abstract void move();
+
+	public boolean isIntersec(BaseObject o) {
+		return Math.sqrt((this.x  - o.x)*(this.x - o.x) + (this.y - o.y) * (this.y - o.y)) < Math.max(this.radius, o.radius);
 	}
 }
