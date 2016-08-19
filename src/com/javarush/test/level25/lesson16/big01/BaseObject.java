@@ -40,4 +40,16 @@ public class BaseObject {
 	public boolean isAlive() {
 		return isAlive;
 	}
+
+	public void draw() {}
+
+	public void move() {}
+
+	public void die() {
+		isAlive = false;
+	}
+
+	public boolean isIntersec(BaseObject o) {
+		return Math.sqrt((this.x - o.x) * (this.x - o.x) + (this.y - o.y) * (this.y - o.y)) < Math.max(this.radius, o.radius);
+	}
 }
