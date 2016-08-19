@@ -49,6 +49,8 @@ public class Space {
 
 	public void sleep(int ms) {}
 
+	public static Space game;
+
 	public static void main(String[] args) {
 
 	}
