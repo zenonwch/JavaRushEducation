@@ -2,7 +2,6 @@ package com.javarush.test.level25.lesson16.big01;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -104,8 +103,7 @@ public class Space {
 	 * Создаем новый НЛО. 1 раз на 10 вызовов.
 	 */
 	public void createUfo() {
-		//тут нужно создать новый НЛО.
-		//1 раз за 10 вызовов метода.
+		if (ufos.isEmpty()) ufos.add(new Ufo(width / 2, 0));
 	}
 
 	/**
@@ -114,7 +112,13 @@ public class Space {
 	 * б) падение ниже края игрового поля (бомба умирает)
 	 */
 	public void checkBombs() {
-		//тут нужно проверить все возможные столкновения для каждой бомбы.
+		for (Bomb bomb : bombs) {
+			if (bomb.y > height) bomb.die();
+			if (bomb.isIntersec(ship)) {
+				bomb.die();
+				ship.die();
+			}
+		}
 	}
 
 	/**
@@ -123,15 +127,27 @@ public class Space {
 	 * б) вылет выше края игрового поля (ракета умирает)
 	 */
 	public void checkRockets() {
-		//тут нужно проверить все возможные столкновения для каждой ракеты.
+		for (Rocket rocket : rockets) {
+			if (rocket.y < 0) rocket.die();
+			for (Ufo ufo : ufos) {
+				if (rocket.isIntersec(ufo)) {
+					rocket.die();
+					ufo.die();
+				}
+			}
+		}
 	}
 
 	/**
 	 * Удаляем умерсшие объекты (бомбы, ракеты, НЛО) из списков
 	 */
 	public void removeDead() {
-		//тут нужно удалить все умершие объекты из списков.
-		//Кроме космического корабля - по нему определяем ищет еще игра или нет.
+		List<Bomb> copyBombs = new ArrayList<>(getBombs());
+		List<Rocket> copyRockets = new ArrayList<>(getRockets());
+		List<Ufo> copyUfos = new ArrayList<>(getUfos());
+		for (Bomb bomb : copyBombs) if (!bomb.isAlive()) getBombs().remove(bomb);
+		for (Rocket rocket : copyRockets) if (!rocket.isAlive()) getRockets().remove(rocket);
+		for (Ufo ufo : copyUfos) if (!ufo.isAlive()) getUfos().remove(ufo);
 	}
 
 	/**
