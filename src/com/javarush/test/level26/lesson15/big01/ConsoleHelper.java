@@ -15,7 +15,9 @@ public class ConsoleHelper {
 		String message = "";
 		try {
 			message = reader.readLine();
-		} catch (IOException e) {}
+		}
+		catch (IOException e) {
+		}
 		return message;
 	}
 
@@ -29,7 +31,7 @@ public class ConsoleHelper {
 				break;
 			}
 			catch (IOException e) {
-				System.out.println("Пожалуйста, повторите попытку.");
+				System.out.println("Пожалуйста, введите корректные данные");
 			}
 		}
 		return currencyCode.toUpperCase();
@@ -45,10 +47,26 @@ public class ConsoleHelper {
 				Integer.parseInt(validTwoDigits[0]);
 				Integer.parseInt(validTwoDigits[1]);
 				break;
-			} catch (IOException | NumberFormatException e) {
-				System.out.println("Пожалуйста, повторите попытку.");
+			}
+			catch (IOException | NumberFormatException e) {
+				System.out.println("Пожалуйста, введите корректные данные.");
 			}
 		}
 		return validTwoDigits;
+	}
+
+	public static Operation askOperation() {
+		Operation op;
+		System.out.println("Пожалуйста, выберите номер операции.");
+		while (true) {
+			try {
+				op = Operation.getAllowableOperationByOrdinal(Integer.parseInt(reader.readLine()));
+				break;
+			}
+			catch (IOException | IllegalArgumentException e) {
+				System.out.println("Пожалуйста, введите корректные данные");
+			}
+		}
+		return op;
 	}
 }
