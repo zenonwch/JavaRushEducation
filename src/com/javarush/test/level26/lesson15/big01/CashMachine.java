@@ -9,5 +9,6 @@ public class CashMachine {
 		String[] denominationAndCount = ConsoleHelper.getValidTwoDigits(currencyCode);
 		CurrencyManipulator manipulator = CurrencyManipulatorFactory.getManipulatorByCurrencyCode(currencyCode);
 		manipulator.addAmount(Integer.parseInt(denominationAndCount[0]), Integer.parseInt(denominationAndCount[1]));
+		System.out.println(manipulator.getTotalAmount());
 	}
 }
