@@ -60,7 +60,7 @@ public class ConsoleHelper {
 
 	public static Operation askOperation() throws InterruptOperationException {
 		Operation op;
-		writeMessage("Пожалуйста, выберите номер операции.");
+		writeMessage("Пожалуйста, выберите номер операции:\n1 - Info\n2 - Deposit\n3 - Withdraw\n4 - Exit");
 		while (true) {
 			try {
 				op = Operation.getAllowableOperationByOrdinal(Integer.parseInt(readString()));
