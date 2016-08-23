@@ -6,8 +6,13 @@ import com.sun.media.sound.InvalidDataException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Locale;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 
 public class ConsoleHelper {
+	private static final String commonPropsPath = "com.javarush.test.level26.lesson15.big01.resources.common";
+	public static ResourceBundle res = PropertyResourceBundle.getBundle(commonPropsPath, Locale.ENGLISH);
 	private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
 	public static void writeMessage(String message) {
@@ -27,7 +32,7 @@ public class ConsoleHelper {
 
 	public static String askCurrencyCode() throws InterruptOperationException {
 		String currencyCode;
-		writeMessage("Введите, пожалуйста, код валюты.");
+		writeMessage(res.getString("choose.currency.code"));
 		while (true) {
 			try {
 				currencyCode = readString();
@@ -35,7 +40,7 @@ public class ConsoleHelper {
 				break;
 			}
 			catch (IOException e) {
-				writeMessage("Пожалуйста, введите корректные данные");
+				writeMessage(res.getString("invalid.data"));
 			}
 		}
 		return currencyCode.toUpperCase();
@@ -43,7 +48,7 @@ public class ConsoleHelper {
 
 	public static String[] getValidTwoDigits(String currencyCode) throws InterruptOperationException {
 		String[] validTwoDigits;
-		writeMessage("Введите, пожалуйста, через пробел номинал и количество банкнот.");
+		writeMessage(String.format(res.getString("choose.denomination.and.count.format"), currencyCode));
 		while (true) {
 			try {
 				validTwoDigits = readString().split(" ");
@@ -51,7 +56,7 @@ public class ConsoleHelper {
 				break;
 			}
 			catch (InvalidDataException e) {
-				writeMessage("Пожалуйста, введите два числа, разделенные пробелом.");
+				writeMessage(res.getString("invalid.data"));
 			}
 		}
 		return validTwoDigits;
@@ -59,14 +64,18 @@ public class ConsoleHelper {
 
 	public static Operation askOperation() throws InterruptOperationException {
 		Operation op;
-		writeMessage("Пожалуйста, выберите номер операции:\n1 - Info\n2 - Deposit\n3 - Withdraw\n4 - Exit");
+		writeMessage(res.getString("choose.operation"));
+		writeMessage("1: " + res.getString("operation.INFO"));
+		writeMessage("2: " + res.getString("operation.DEPOSIT"));
+		writeMessage("3: " + res.getString("operation.WITHDRAW"));
+		writeMessage("4: " + res.getString("operation.EXIT"));
 		while (true) {
 			try {
 				op = Operation.getAllowableOperationByOrdinal(Integer.parseInt(readString()));
 				break;
 			}
 			catch (IllegalArgumentException e) {
-				writeMessage("Пожалуйста, введите корректные данные");
+				writeMessage(res.getString("invalid.data"));
 			}
 		}
 		return op;

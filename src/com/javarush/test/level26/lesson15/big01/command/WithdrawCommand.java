@@ -6,17 +6,24 @@ import com.javarush.test.level26.lesson15.big01.CurrencyManipulatorFactory;
 import com.javarush.test.level26.lesson15.big01.exception.InterruptOperationException;
 import com.javarush.test.level26.lesson15.big01.exception.NotEnoughMoneyException;
 
+import java.util.Locale;
 import java.util.Map;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 
 class WithdrawCommand implements Command {
+	private static final String withdrawPropsPath = "com.javarush.test.level26.lesson15.big01.resources.withdraw";
+	private ResourceBundle res = PropertyResourceBundle.getBundle(withdrawPropsPath, Locale.ENGLISH);
+
 	@Override
 	public void execute() throws InterruptOperationException {
 		String currencyCode = ConsoleHelper.askCurrencyCode();
 		CurrencyManipulator manipulator = CurrencyManipulatorFactory.getManipulatorByCurrencyCode(currencyCode);
 		while (true) {
 			try {
-				ConsoleHelper.writeMessage("Пожалуйста, введите сумму.");
+				ConsoleHelper.writeMessage(res.getString("specify.amount"));
 				int amount = Integer.parseInt(ConsoleHelper.readString());
+				ConsoleHelper.writeMessage(res.getString("before"));
 				if (manipulator.isAmountAvailable(amount)) {
 					Map<Integer, Integer> withdraw = manipulator.withdrawAmount(amount);
 					for (Map.Entry<Integer, Integer> pair : withdraw.entrySet())
@@ -24,11 +31,17 @@ class WithdrawCommand implements Command {
 				} else {
 					throw new NotEnoughMoneyException();
 				}
+				ConsoleHelper.writeMessage(String.format(res.getString("success.format"), amount, currencyCode));
 				break;
-			} catch (NumberFormatException e) {
-				ConsoleHelper.writeMessage("Пожалуйста, введите корректные данные.");
-			} catch (NotEnoughMoneyException e) {
-				ConsoleHelper.writeMessage("Извините, в банкомате не хватает средств.");
+			}
+			catch (NumberFormatException e) {
+				ConsoleHelper.writeMessage(res.getString("specify.not.empty.amount"));
+			}
+			catch (NotEnoughMoneyException e) {
+				if (e.getStackTrace()[0].getMethodName().equals("withdrawAmount"))
+					ConsoleHelper.writeMessage(res.getString("exact.amount.not.available"));
+				else
+					ConsoleHelper.writeMessage(res.getString("not.enough.money"));
 			}
 		}
 	}

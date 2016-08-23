@@ -21,7 +21,7 @@ class DepositCommand implements Command {
 		CurrencyManipulator manipulator = CurrencyManipulatorFactory.getManipulatorByCurrencyCode(currencyCode);
 		try {
 			int denomination = Integer.parseInt(denominationAndCount[0]);
-			int count = Integer.parseInt(denominationAndCount[0]);
+			int count = Integer.parseInt(denominationAndCount[1]);
 			manipulator.addAmount(denomination, count);
 			ConsoleHelper.writeMessage(String.format(res.getString("success.format"), denomination * count, currencyCode));
 		}
