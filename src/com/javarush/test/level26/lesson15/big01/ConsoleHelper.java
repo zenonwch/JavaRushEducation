@@ -1,6 +1,7 @@
 package com.javarush.test.level26.lesson15.big01;
 
 import com.javarush.test.level26.lesson15.big01.exception.InterruptOperationException;
+import com.sun.media.sound.InvalidDataException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -46,13 +47,11 @@ public class ConsoleHelper {
 		while (true) {
 			try {
 				validTwoDigits = readString().split(" ");
-				if (validTwoDigits.length != 2) throw new IOException();
-				Integer.parseInt(validTwoDigits[0]);
-				Integer.parseInt(validTwoDigits[1]);
+				if (validTwoDigits.length != 2) throw new InvalidDataException();
 				break;
 			}
-			catch (IOException | NumberFormatException e) {
-				writeMessage("Пожалуйста, введите корректные данные.");
+			catch (InvalidDataException e) {
+				writeMessage("Пожалуйста, введите два числа, разделенные пробелом.");
 			}
 		}
 		return validTwoDigits;

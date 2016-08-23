@@ -8,7 +8,7 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 public class LoginCommand implements Command {
-	private static final String verifiedCardsProps = "com/javarush/test/level26/lesson15/big01/resources/verifiedCards";
+	private static final String verifiedCardsProps = "com.javarush.test.level26.lesson15.big01.resources.verifiedCards";
 	private ResourceBundle validCreditCards = PropertyResourceBundle.getBundle(verifiedCardsProps, Locale.ENGLISH);
 
 	@Override
