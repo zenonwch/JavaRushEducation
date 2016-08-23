@@ -1,5 +1,7 @@
 package com.javarush.test.level26.lesson15.big01;
 
+import com.javarush.test.level26.lesson15.big01.exception.InterruptOperationException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,60 +13,61 @@ public class ConsoleHelper {
 		System.out.println(message);
 	}
 
-	public static String readString() {
+	public static String readString() throws InterruptOperationException {
 		String message = "";
 		try {
 			message = reader.readLine();
+			if (message.toUpperCase().equals("EXIT")) throw new InterruptOperationException();
 		}
 		catch (IOException e) {
 		}
 		return message;
 	}
 
-	public static String askCurrencyCode() {
+	public static String askCurrencyCode() throws InterruptOperationException {
 		String currencyCode;
-		System.out.println("Введите, пожалуйста, код валюты.");
+		writeMessage("Введите, пожалуйста, код валюты.");
 		while (true) {
 			try {
-				currencyCode = reader.readLine();
+				currencyCode = readString();
 				if (currencyCode.length() != 3) throw new IOException();
 				break;
 			}
 			catch (IOException e) {
-				System.out.println("Пожалуйста, введите корректные данные");
+				writeMessage("Пожалуйста, введите корректные данные");
 			}
 		}
 		return currencyCode.toUpperCase();
 	}
 
-	public static String[] getValidTwoDigits(String currencyCode) {
+	public static String[] getValidTwoDigits(String currencyCode) throws InterruptOperationException {
 		String[] validTwoDigits;
-		System.out.println("Введите, пожалуйста, через пробел номинал и количество банкнот.");
+		writeMessage("Введите, пожалуйста, через пробел номинал и количество банкнот.");
 		while (true) {
 			try {
-				validTwoDigits = reader.readLine().split(" ");
+				validTwoDigits = readString().split(" ");
 				if (validTwoDigits.length != 2) throw new IOException();
 				Integer.parseInt(validTwoDigits[0]);
 				Integer.parseInt(validTwoDigits[1]);
 				break;
 			}
 			catch (IOException | NumberFormatException e) {
-				System.out.println("Пожалуйста, введите корректные данные.");
+				writeMessage("Пожалуйста, введите корректные данные.");
 			}
 		}
 		return validTwoDigits;
 	}
 
-	public static Operation askOperation() {
+	public static Operation askOperation() throws InterruptOperationException {
 		Operation op;
-		System.out.println("Пожалуйста, выберите номер операции.");
+		writeMessage("Пожалуйста, выберите номер операции.");
 		while (true) {
 			try {
-				op = Operation.getAllowableOperationByOrdinal(Integer.parseInt(reader.readLine()));
+				op = Operation.getAllowableOperationByOrdinal(Integer.parseInt(readString()));
 				break;
 			}
-			catch (IOException | IllegalArgumentException e) {
-				System.out.println("Пожалуйста, введите корректные данные");
+			catch (IllegalArgumentException e) {
+				writeMessage("Пожалуйста, введите корректные данные");
 			}
 		}
 		return op;
