@@ -11,8 +11,8 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 public class ConsoleHelper {
-	private static final String commonPropsPath = "com.javarush.test.level26.lesson15.big01.resources.common";
-	public static ResourceBundle res = PropertyResourceBundle.getBundle(commonPropsPath, Locale.ENGLISH);
+	private static final String commonPropsPath = CashMachine.RESOURCE_PATH + "common";
+	private static ResourceBundle res = PropertyResourceBundle.getBundle(commonPropsPath, Locale.ENGLISH);
 	private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
 	public static void writeMessage(String message) {
@@ -23,7 +23,8 @@ public class ConsoleHelper {
 		String message = "";
 		try {
 			message = reader.readLine();
-			if (message.toUpperCase().equals("EXIT")) throw new InterruptOperationException();
+			if (message.toUpperCase().equals("EXIT")) throw new InterruptOperationException("exit");
+			if (message.toUpperCase().equals("MENU")) throw new InterruptOperationException("menu");
 		}
 		catch (IOException e) {
 		}
@@ -79,5 +80,9 @@ public class ConsoleHelper {
 			}
 		}
 		return op;
+	}
+
+	public static void printExitMessage() {
+		writeMessage(res.getString("the.end"));
 	}
 }

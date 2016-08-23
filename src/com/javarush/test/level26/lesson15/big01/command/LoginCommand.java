@@ -1,5 +1,6 @@
 package com.javarush.test.level26.lesson15.big01.command;
 
+import com.javarush.test.level26.lesson15.big01.CashMachine;
 import com.javarush.test.level26.lesson15.big01.ConsoleHelper;
 import com.javarush.test.level26.lesson15.big01.exception.InterruptOperationException;
 
@@ -8,8 +9,8 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 public class LoginCommand implements Command {
-	private static final String verifiedCardsProps = "com.javarush.test.level26.lesson15.big01.resources.verifiedCards";
-	private static final String loginPropsPath = "com.javarush.test.level26.lesson15.big01.resources.login";
+	private static final String verifiedCardsProps = CashMachine.RESOURCE_PATH + "verifiedCards";
+	private static final String loginPropsPath = CashMachine.RESOURCE_PATH + "login";
 	private ResourceBundle validCreditCards = PropertyResourceBundle.getBundle(verifiedCardsProps, Locale.ENGLISH);
 	private ResourceBundle res = PropertyResourceBundle.getBundle(loginPropsPath, Locale.ENGLISH);
 

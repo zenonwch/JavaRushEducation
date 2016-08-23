@@ -1,5 +1,6 @@
 package com.javarush.test.level26.lesson15.big01.command;
 
+import com.javarush.test.level26.lesson15.big01.CashMachine;
 import com.javarush.test.level26.lesson15.big01.ConsoleHelper;
 import com.javarush.test.level26.lesson15.big01.CurrencyManipulator;
 import com.javarush.test.level26.lesson15.big01.CurrencyManipulatorFactory;
@@ -12,7 +13,7 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 class WithdrawCommand implements Command {
-	private static final String withdrawPropsPath = "com.javarush.test.level26.lesson15.big01.resources.withdraw";
+	private static final String withdrawPropsPath = CashMachine.RESOURCE_PATH + "withdraw";
 	private ResourceBundle res = PropertyResourceBundle.getBundle(withdrawPropsPath, Locale.ENGLISH);
 
 	@Override

@@ -1,5 +1,6 @@
 package com.javarush.test.level26.lesson15.big01.command;
 
+import com.javarush.test.level26.lesson15.big01.CashMachine;
 import com.javarush.test.level26.lesson15.big01.ConsoleHelper;
 import com.javarush.test.level26.lesson15.big01.CurrencyManipulator;
 import com.javarush.test.level26.lesson15.big01.CurrencyManipulatorFactory;
@@ -10,7 +11,7 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 class DepositCommand implements Command {
-	private static final String depoPropsPath = "com.javarush.test.level26.lesson15.big01.resources.deposit";
+	private static final String depoPropsPath = CashMachine.RESOURCE_PATH + "deposit";
 	private ResourceBundle res = PropertyResourceBundle.getBundle(depoPropsPath, Locale.ENGLISH);
 
 	@Override
