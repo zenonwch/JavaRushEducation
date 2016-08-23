@@ -27,4 +27,8 @@ public class CurrencyManipulator {
 			amount += pair.getKey() * pair.getValue();
 		return amount;
 	}
+
+	public boolean hasMoney() {
+		return !denominations.isEmpty();
+	}
 }
