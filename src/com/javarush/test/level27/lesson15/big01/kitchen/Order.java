@@ -15,6 +15,17 @@ public class Order {
 		this.tablet = tablet;
 	}
 
+	public boolean isEmpty() {
+		return dishes == null || dishes.isEmpty();
+	}
+
+	public int getTotalCookingTime() {
+		int totalTime = 0;
+		for (Dish dish : dishes)
+			totalTime += dish.getDuration();
+		return totalTime;
+	}
+
 	@Override
 	public String toString() {
 		String res = "";

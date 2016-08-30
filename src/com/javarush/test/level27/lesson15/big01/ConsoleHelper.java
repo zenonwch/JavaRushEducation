@@ -23,11 +23,16 @@ public class ConsoleHelper {
 		List<Dish> dishes = new ArrayList<>();
 		writeMessage(Dish.allDishesToString());
 		while (true) {
+			boolean found = false;
 			String order = readString();
 			if (order.equalsIgnoreCase("exit")) break;
-			for (Dish dish : Dish.values())
-				if (order.equalsIgnoreCase(dish.toString()))
+			for (Dish dish : Dish.values()) {
+				if (order.equals(dish.toString())) {
 					dishes.add(dish);
+					found = true;
+				}
+			}
+			if (!found) writeMessage(order + " is not detected");
 		}
 		return dishes;
 	}
