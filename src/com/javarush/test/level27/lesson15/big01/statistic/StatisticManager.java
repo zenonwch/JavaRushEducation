@@ -1,16 +1,15 @@
 package com.javarush.test.level27.lesson15.big01.statistic;
 
+import com.javarush.test.level27.lesson15.big01.kitchen.Cook;
 import com.javarush.test.level27.lesson15.big01.statistic.event.EventDataRow;
 import com.javarush.test.level27.lesson15.big01.statistic.event.EventType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class StatisticManager {
 	private static final StatisticManager INSTANCE = new StatisticManager();
 	private StatisticStorage statisticStorage = new StatisticStorage();
+	private Set<Cook> cooks = new HashSet<>();
 
 	private StatisticManager() {}
 
@@ -20,6 +19,10 @@ public class StatisticManager {
 
 	public void register(EventDataRow data) {
 		statisticStorage.put(data);
+	}
+
+	public void register(Cook cook) {
+		cooks.add(cook);
 	}
 
 	private static class StatisticStorage {
