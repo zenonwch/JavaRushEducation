@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class StatisticManager {
 	private static final StatisticManager INSTANCE = new StatisticManager();
-	private StatisticStorage storage = new StatisticStorage();
+	private StatisticStorage statisticStorage = new StatisticStorage();
 
 	private StatisticManager() {}
 
@@ -19,16 +19,20 @@ public class StatisticManager {
 	}
 
 	public void register(EventDataRow data) {
-		//TODO
+		statisticStorage.put(data);
 	}
 
-	private class StatisticStorage {
-		Map<EventType, List<EventDataRow>> map = new HashMap<>();
+	private static class StatisticStorage {
+		Map<EventType, List<EventDataRow>> eventTypeMap = new HashMap<>();
 
 		private StatisticStorage() {
 			for (EventType e: EventType.values()) {
-				map.put(e, new ArrayList<EventDataRow>());
+				eventTypeMap.put(e, new ArrayList<EventDataRow>());
 			}
+		}
+
+		private void put(EventDataRow data){
+			eventTypeMap.get(data.getType()).add(data);
 		}
 	}
 }

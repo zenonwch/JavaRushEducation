@@ -7,12 +7,20 @@ import java.io.IOException;
 import java.util.List;
 
 public class Order {
-	private static List<Dish> dishes;
+	private List<Dish> dishes;
 	private Tablet tablet;
 
 	public Order(Tablet tablet) throws IOException {
 		dishes = ConsoleHelper.getAllDishesForOrder();
 		this.tablet = tablet;
+	}
+
+	public List<Dish> getDishes() {
+		return dishes;
+	}
+
+	public Tablet getTablet() {
+		return tablet;
 	}
 
 	public boolean isEmpty() {

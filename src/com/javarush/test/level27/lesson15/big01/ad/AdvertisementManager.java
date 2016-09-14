@@ -1,12 +1,14 @@
 package com.javarush.test.level27.lesson15.big01.ad;
 
 import com.javarush.test.level27.lesson15.big01.ConsoleHelper;
+import com.javarush.test.level27.lesson15.big01.statistic.StatisticManager;
+import com.javarush.test.level27.lesson15.big01.statistic.event.VideoSelectedEventDataRow;
 
 import java.util.*;
 
 public class AdvertisementManager {
 	private static final AdvertisementStorage storage = AdvertisementStorage.getInstance();
-	private List<Object> bestSet = new LinkedList<>();
+	private List<Advertisement> bestSet = new LinkedList<>();
 	private long bestCost;
 	private int timeOfBestSet;
 	private int timeSeconds;
@@ -15,12 +17,12 @@ public class AdvertisementManager {
 		this.timeSeconds = timeSeconds;
 	}
 
-	private void findBestSet(List<Object> available, List<Object> taken, long cost, int time) {
+	private void findBestSet(List<Advertisement> available, List<Advertisement> taken, long cost, int time) {
 		long newCost = cost;
 		int newTime = time;
 
 		if (!available.isEmpty()) {
-			Advertisement currAd = (Advertisement) available.get(0);
+			Advertisement currAd = available.get(0);
 
 			available.remove(currAd);
 			findBestSet(new LinkedList<>(available), new LinkedList<>(taken), cost, time);
@@ -52,12 +54,13 @@ public class AdvertisementManager {
 
 	public void processVideos() {
 		if (storage.list().isEmpty()) throw new NoVideoAvailableException();
-		List<Object> listWithHits = new LinkedList<>();
+		List<Advertisement> listWithHits = new LinkedList<>();
 		for (Object o : storage.list()) {
-			if (((Advertisement) o).getHits() > 0) listWithHits.add(o);
+			if (((Advertisement) o).getHits() > 0) listWithHits.add((Advertisement) o);
 		}
-		findBestSet(listWithHits, new LinkedList<>(), 0, 0);
+		findBestSet(listWithHits, new LinkedList<Advertisement>(), 0, 0);
 		if (bestSet.isEmpty()) throw new NoVideoAvailableException();
+		StatisticManager.getInstance().register(new VideoSelectedEventDataRow(bestSet, bestCost, timeOfBestSet));
 		Collections.sort(bestSet, new Comparator<Object>() {
 			@Override
 			public int compare(Object o1, Object o2) {
@@ -72,8 +75,7 @@ public class AdvertisementManager {
 				} else return Long.compare(amount2, amount1);
 			}
 		});
-		for (Object o : bestSet) {
-			Advertisement ad = (Advertisement) o;
+		for (Advertisement ad : bestSet) {
 			ad.revalidate();
 			ConsoleHelper.writeMessage(String.format("%s is displaying... %d, %d", ad.getName(), ad.getAmountPerOneDisplaying(), ad.getAmountPerOneDisplaying() * 1000 / ad.getDuration()));
 		}
