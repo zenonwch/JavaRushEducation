@@ -1,7 +1,7 @@
 package com.javarush.test.level27.lesson15.big01.ad;
 
 import com.javarush.test.level27.lesson15.big01.ConsoleHelper;
-import com.javarush.test.level27.lesson15.big01.statistic.StatisticManager;
+import com.javarush.test.level27.lesson15.big01.statistic.StatisticEventManager;
 import com.javarush.test.level27.lesson15.big01.statistic.event.VideoSelectedEventDataRow;
 
 import java.util.*;
@@ -60,7 +60,7 @@ public class AdvertisementManager {
 		}
 		findBestSet(listWithHits, new LinkedList<Advertisement>(), 0, 0);
 		if (bestSet.isEmpty()) throw new NoVideoAvailableException();
-		StatisticManager.getInstance().register(new VideoSelectedEventDataRow(bestSet, bestCost, timeOfBestSet));
+		StatisticEventManager.getInstance().register(new VideoSelectedEventDataRow(bestSet, bestCost, timeOfBestSet));
 		Collections.sort(bestSet, new Comparator<Object>() {
 			@Override
 			public int compare(Object o1, Object o2) {

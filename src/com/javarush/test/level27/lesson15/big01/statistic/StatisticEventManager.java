@@ -9,16 +9,16 @@ import com.javarush.test.level27.lesson15.big01.statistic.event.VideoSelectedEve
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class StatisticManager {
-	private static final StatisticManager INSTANCE = new StatisticManager();
+public class StatisticEventManager {
+	private static final StatisticEventManager INSTANCE = new StatisticEventManager();
 	private StatisticStorage statisticStorage = new StatisticStorage();
 	private Set<Cook> cooks = new HashSet<>();
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
 
-	private StatisticManager() {
+	private StatisticEventManager() {
 	}
 
-	public static StatisticManager getInstance() {
+	public static StatisticEventManager getInstance() {
 		return INSTANCE;
 	}
 

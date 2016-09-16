@@ -1,13 +1,15 @@
 package com.javarush.test.level27.lesson15.big01;
 
-import com.javarush.test.level27.lesson15.big01.statistic.StatisticManager;
+import com.javarush.test.level27.lesson15.big01.ad.Advertisement;
+import com.javarush.test.level27.lesson15.big01.ad.StatisticAdvertisementManager;
+import com.javarush.test.level27.lesson15.big01.statistic.StatisticEventManager;
 
 import java.util.Map;
 
 public class DirectorTablet {
 	public void printAdvertisementProfit() {
 		long totalAmount = 0;
-		for (Map.Entry<String, Long> pair : StatisticManager.getInstance().advertisementProfit().entrySet()) {
+		for (Map.Entry<String, Long> pair : StatisticEventManager.getInstance().advertisementProfit().entrySet()) {
 			ConsoleHelper.writeMessage(pair.getKey() + " - " + (float) pair.getValue() / 100);
 			totalAmount += pair.getValue();
 		}
@@ -16,7 +18,7 @@ public class DirectorTablet {
 	}
 
 	public void printCookWorkloading() {
-		for (Map.Entry<String, Map<String, Integer>> dayWorkload : StatisticManager.getInstance().cookWorkloading().entrySet()) {
+		for (Map.Entry<String, Map<String, Integer>> dayWorkload : StatisticEventManager.getInstance().cookWorkloading().entrySet()) {
 			ConsoleHelper.writeMessage(dayWorkload.getKey());
 			for (Map.Entry<String, Integer> cookWorkload : dayWorkload.getValue().entrySet()) {
 				ConsoleHelper.writeMessage(cookWorkload.getKey() + " - " + (int) Math.ceil((float) cookWorkload.getValue() / 60) + " min");
@@ -25,6 +27,17 @@ public class DirectorTablet {
 		}
 	}
 
-	public void printActiveVideoSet() {}
-	public void printArchivedVideoSet() {}
+	public void printActiveVideoSet() {
+		for (Advertisement ad : StatisticAdvertisementManager.getInstance().getActiveVideoSet()) {
+			ConsoleHelper.writeMessage(ad.getName() + " - " + ad.getHits());
+		}
+		ConsoleHelper.writeMessage("");
+	}
+
+	public void printArchivedVideoSet() {
+		for (Advertisement ad : StatisticAdvertisementManager.getInstance().getArchivedVideoSet()) {
+			ConsoleHelper.writeMessage(ad.getName());
+		}
+		ConsoleHelper.writeMessage("");
+	}
 }
