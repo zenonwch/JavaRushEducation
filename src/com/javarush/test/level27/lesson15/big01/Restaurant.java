@@ -22,11 +22,12 @@ public class Restaurant {
 		cookAmigo.addObserver(waitor);
 		cookChief.addObserver(waitor);
 
+		OrderManager orderManager = new OrderManager();
+
 		List<Tablet> tablets = new ArrayList<>();
 		for (int i = 1; i <= 5; i++) {
 			Tablet tablet = new Tablet(i);
-			tablet.addObserver(cookAmigo);
-			tablet.addObserver(cookChief);
+			tablet.addObserver(orderManager);
 			tablets.add(tablet);
 		}
 
