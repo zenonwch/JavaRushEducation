@@ -14,7 +14,6 @@ public class DirectorTablet {
 			totalAmount += pair.getValue();
 		}
 		ConsoleHelper.writeMessage("Total - " + (float) totalAmount / 100);
-		ConsoleHelper.writeMessage("");
 	}
 
 	public void printCookWorkloading() {
@@ -31,13 +30,11 @@ public class DirectorTablet {
 		for (Advertisement ad : StatisticAdvertisementManager.getInstance().getActiveVideoSet()) {
 			ConsoleHelper.writeMessage(ad.getName() + " - " + ad.getHits());
 		}
-		ConsoleHelper.writeMessage("");
 	}
 
 	public void printArchivedVideoSet() {
 		for (Advertisement ad : StatisticAdvertisementManager.getInstance().getArchivedVideoSet()) {
 			ConsoleHelper.writeMessage(ad.getName());
 		}
-		ConsoleHelper.writeMessage("");
 	}
 }
