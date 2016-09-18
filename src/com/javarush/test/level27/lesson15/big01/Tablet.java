@@ -3,6 +3,7 @@ package com.javarush.test.level27.lesson15.big01;
 import com.javarush.test.level27.lesson15.big01.ad.AdvertisementManager;
 import com.javarush.test.level27.lesson15.big01.ad.NoVideoAvailableException;
 import com.javarush.test.level27.lesson15.big01.kitchen.Order;
+import com.javarush.test.level27.lesson15.big01.kitchen.TestOrder;
 
 import java.io.IOException;
 import java.util.Observable;
@@ -21,18 +22,36 @@ public class Tablet extends Observable {
 		Order order = null;
 		try {
 			order = new Order(this);
-			if (!order.isEmpty()) {
-				ConsoleHelper.writeMessage(order.toString());
-				setChanged();
-				new AdvertisementManager(order.getTotalCookingTime() * 60).processVideos();
-				notifyObservers(order);
-			}
+			processOrder(order);
 		}
 		catch (IOException e) {
 			logger.log(Level.SEVERE, "Console is unavailable.");
 		}
-		catch(NoVideoAvailableException e) {
+		catch (NoVideoAvailableException e) {
 			logger.log(Level.INFO, "No video is available for the order " + order);
+		}
+	}
+
+	public void createTestOrder() {
+		TestOrder testOrder = null;
+		try {
+			testOrder = new TestOrder(this);
+			processOrder(testOrder);
+		}
+		catch (IOException e) {
+			logger.log(Level.SEVERE, "Console is unavailable.");
+		}
+		catch (NoVideoAvailableException e) {
+			logger.log(Level.INFO, "No video is available for the order " + testOrder);
+		}
+	}
+
+	private void processOrder(Order order) {
+		if (!order.isEmpty()) {
+			ConsoleHelper.writeMessage(order.toString());
+			setChanged();
+			new AdvertisementManager(order.getTotalCookingTime() * 60).processVideos();
+			notifyObservers(order);
 		}
 	}
 

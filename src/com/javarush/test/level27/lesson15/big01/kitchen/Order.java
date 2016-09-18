@@ -7,12 +7,16 @@ import java.io.IOException;
 import java.util.List;
 
 public class Order {
-	private List<Dish> dishes;
+	protected List<Dish> dishes;
 	private Tablet tablet;
 
 	public Order(Tablet tablet) throws IOException {
-		dishes = ConsoleHelper.getAllDishesForOrder();
 		this.tablet = tablet;
+		initDishes();
+	}
+
+	protected void initDishes() throws IOException {
+		dishes = ConsoleHelper.getAllDishesForOrder();
 	}
 
 	public List<Dish> getDishes() {
