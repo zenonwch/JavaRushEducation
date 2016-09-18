@@ -18,6 +18,10 @@ public class StatisticEventManager {
 	private StatisticEventManager() {
 	}
 
+	public Set<Cook> getCooks() {
+		return cooks;
+	}
+
 	public static StatisticEventManager getInstance() {
 		return INSTANCE;
 	}
