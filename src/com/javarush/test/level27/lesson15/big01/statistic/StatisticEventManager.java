@@ -1,6 +1,5 @@
 package com.javarush.test.level27.lesson15.big01.statistic;
 
-import com.javarush.test.level27.lesson15.big01.kitchen.Cook;
 import com.javarush.test.level27.lesson15.big01.statistic.event.CookedOrderEventDataRow;
 import com.javarush.test.level27.lesson15.big01.statistic.event.EventDataRow;
 import com.javarush.test.level27.lesson15.big01.statistic.event.EventType;
@@ -12,14 +11,9 @@ import java.util.*;
 public class StatisticEventManager {
 	private static final StatisticEventManager INSTANCE = new StatisticEventManager();
 	private StatisticStorage statisticStorage = new StatisticStorage();
-	private Set<Cook> cooks = new HashSet<>();
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
 
 	private StatisticEventManager() {
-	}
-
-	public Set<Cook> getCooks() {
-		return cooks;
 	}
 
 	public static StatisticEventManager getInstance() {
@@ -28,10 +22,6 @@ public class StatisticEventManager {
 
 	public void register(EventDataRow data) {
 		statisticStorage.put(data);
-	}
-
-	public void register(Cook cook) {
-		cooks.add(cook);
 	}
 
 	public Map<String, Long> advertisementProfit() {
