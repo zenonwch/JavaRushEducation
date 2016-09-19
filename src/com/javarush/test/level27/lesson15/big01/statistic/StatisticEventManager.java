@@ -1,9 +1,6 @@
 package com.javarush.test.level27.lesson15.big01.statistic;
 
-import com.javarush.test.level27.lesson15.big01.statistic.event.CookedOrderEventDataRow;
-import com.javarush.test.level27.lesson15.big01.statistic.event.EventDataRow;
-import com.javarush.test.level27.lesson15.big01.statistic.event.EventType;
-import com.javarush.test.level27.lesson15.big01.statistic.event.VideoSelectedEventDataRow;
+import com.javarush.test.level27.lesson15.big01.statistic.event.*;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -43,7 +40,7 @@ public class StatisticEventManager {
 		NavigableMap<String, Map<String, Integer>> workloadPerDay = new TreeMap<>();
 
 		for (EventDataRow event : statisticStorage.getEventTypeMap().get(EventType.COOKED_ORDER)) {
-			CookedOrderEventDataRow cookedOrderEvent = ((CookedOrderEventDataRow) event);
+			CookedOrderEventDataRow cookedOrderEvent = (CookedOrderEventDataRow) event;
 			String eventDate = dateFormat.format(cookedOrderEvent.getDate());
 			String cookName = cookedOrderEvent.getCookName();
 			int cookTime = cookedOrderEvent.getTime();
@@ -57,6 +54,23 @@ public class StatisticEventManager {
 				workloadPerDay.get(eventDate).put(cookName, workloadPerDay.get(eventDate).get(cookName) + cookTime);
 		}
 		return workloadPerDay.descendingMap();
+	}
+
+	public Map<String, List<Integer>> noAvailableVideo() {
+		NavigableMap<String, List<Integer>> noAvailableVideoWarningsPerDay = new TreeMap<>();
+
+		for (EventDataRow event : statisticStorage.getEventTypeMap().get(EventType.NO_AVAILABLE_VIDEO)) {
+			NoAvailableVideoEventDataRow noVideoEvent = (NoAvailableVideoEventDataRow) event;
+			String eventDate = dateFormat.format(noVideoEvent.getDate());
+			int eventDuration = noVideoEvent.getTime();
+
+			if (noAvailableVideoWarningsPerDay.get(eventDate) == null)
+				noAvailableVideoWarningsPerDay.put(eventDate, new ArrayList<Integer>());
+
+			noAvailableVideoWarningsPerDay.get(eventDate).add(eventDuration);
+		}
+
+		return noAvailableVideoWarningsPerDay.descendingMap();
 	}
 
 	private static class StatisticStorage {

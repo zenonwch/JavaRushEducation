@@ -9,6 +9,7 @@ import java.util.List;
 public class Order {
 	protected List<Dish> dishes;
 	private Tablet tablet;
+	private Cook cook;
 
 	public Order(Tablet tablet) throws IOException {
 		this.tablet = tablet;
@@ -25,6 +26,14 @@ public class Order {
 
 	public Tablet getTablet() {
 		return tablet;
+	}
+
+	public Cook getCook() {
+		return cook;
+	}
+
+	public void setCook(Cook cook) {
+		this.cook = cook;
 	}
 
 	public boolean isEmpty() {

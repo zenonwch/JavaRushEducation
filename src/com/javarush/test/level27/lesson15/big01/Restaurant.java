@@ -12,6 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Restaurant {
 	private final static int ORDER_CREATING_INTERVAL = 100;
 	private final static LinkedBlockingQueue<Order> QUEUE = new LinkedBlockingQueue<>();
+	private final static LinkedBlockingQueue<Order> READY_QUEUE = new LinkedBlockingQueue<>();
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.ENGLISH);
@@ -19,11 +20,12 @@ public class Restaurant {
 		Cook cookAmigo = new Cook("Amigo");
 		Cook cookChief = new Cook("Chief");
 		cookAmigo.setQueue(QUEUE);
+		cookAmigo.setReadyOrders(READY_QUEUE);
 		cookChief.setQueue(QUEUE);
+		cookChief.setReadyOrders(READY_QUEUE);
 
 		Waitor waitor = new Waitor();
-		cookAmigo.addObserver(waitor);
-		cookChief.addObserver(waitor);
+		waitor.setReadyOrders(READY_QUEUE);
 
 		List<Tablet> tablets = new ArrayList<>();
 		for (int i = 1; i <= 5; i++) {
@@ -37,28 +39,42 @@ public class Restaurant {
 		threadAmigo.start();
 		threadChief.start();
 
+		Thread threadWaitor = new Thread(waitor);
+		threadWaitor.start();
 
-		Thread thread = new Thread(new RandomOrderGeneratorTask(tablets, ORDER_CREATING_INTERVAL));
-		thread.start();
+		Thread threadOrderGenerator = new Thread(new RandomOrderGeneratorTask(tablets, ORDER_CREATING_INTERVAL));
+		threadOrderGenerator.start();
 		try {
 			Thread.sleep(1000);
 		}
-		catch (InterruptedException e) {
+		catch (InterruptedException ignored) {
 		}
-		thread.interrupt();
-		threadAmigo.interrupt();
-		threadChief.interrupt();
+		threadOrderGenerator.interrupt();
+
+		while (true) {
+			if (QUEUE.size() == 0 && READY_QUEUE.size() == 0)
+				if (!cookAmigo.isBusy() && !cookChief.isBusy() && !waitor.isBusy()) {
+					threadAmigo.interrupt();
+					threadChief.interrupt();
+					threadWaitor.interrupt();
+					break;
+				}
+		}
 
 		try {
 			threadAmigo.join();
 			threadChief.join();
+			threadWaitor.join();
 		}
-		catch (InterruptedException e) {}
+		catch (InterruptedException e) {
+			System.out.println("Trying to join threads");
+		}
 
 		DirectorTablet directorTablet = new DirectorTablet();
 		directorTablet.printAdvertisementProfit();
 		directorTablet.printCookWorkloading();
 		directorTablet.printActiveVideoSet();
 		directorTablet.printArchivedVideoSet();
+		directorTablet.printNoAvailableVideo();
 	}
 }

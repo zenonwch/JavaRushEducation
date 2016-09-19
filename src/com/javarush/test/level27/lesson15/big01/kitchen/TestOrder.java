@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class TestOrder extends Order {
 
@@ -18,7 +19,7 @@ public class TestOrder extends Order {
 	protected void initDishes() {
 		List<Dish> availableDishes = Arrays.asList(Dish.values());
 		Collections.shuffle(availableDishes);
-		int numOfSelectedDishes = (int) (Math.random() * availableDishes.size()) + 1;
+		int numOfSelectedDishes = ThreadLocalRandom.current().nextInt(availableDishes.size()) + 1;
 		dishes = new ArrayList<>();
 		for (int i = 0; i < numOfSelectedDishes; i++)
 			dishes.add(availableDishes.get(i));

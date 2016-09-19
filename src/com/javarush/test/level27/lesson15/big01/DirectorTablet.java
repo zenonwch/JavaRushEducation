@@ -4,6 +4,7 @@ import com.javarush.test.level27.lesson15.big01.ad.Advertisement;
 import com.javarush.test.level27.lesson15.big01.ad.StatisticAdvertisementManager;
 import com.javarush.test.level27.lesson15.big01.statistic.StatisticEventManager;
 
+import java.util.List;
 import java.util.Map;
 
 public class DirectorTablet {
@@ -35,6 +36,14 @@ public class DirectorTablet {
 	public void printArchivedVideoSet() {
 		for (Advertisement ad : StatisticAdvertisementManager.getInstance().getArchivedVideoSet()) {
 			ConsoleHelper.writeMessage(ad.getName());
+		}
+	}
+
+	public void printNoAvailableVideo() {
+		for (Map.Entry<String, List<Integer>> noVideo : StatisticEventManager.getInstance().noAvailableVideo().entrySet()) {
+			ConsoleHelper.writeMessage(noVideo.getKey());
+			for (int time : noVideo.getValue())
+				ConsoleHelper.writeMessage("" + time);
 		}
 	}
 }
