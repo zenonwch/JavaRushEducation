@@ -6,11 +6,17 @@ import com.javarush.test.level28.lesson15.big01.vo.Vacancy;
 import java.util.List;
 
 public class HtmlView implements View {
+	private final String filePath = "./src/" + this.getClass().getPackage().getName().replace(".", "/") + "/vacancies.html";
 	private Controller controller;
 
 	@Override
 	public void update(List<Vacancy> vacancies) {
-		System.out.println(vacancies.size());
+		try {
+			updateFile(getUpdatedFileContent(vacancies));
+		}
+		catch (Exception e) {
+			e.getStackTrace();
+		}
 	}
 
 	@Override
@@ -21,4 +27,10 @@ public class HtmlView implements View {
 	public void userCitySelectEmulationMethod() {
 		controller.onCitySelect("Odessa");
 	}
+
+	private String getUpdatedFileContent(List<Vacancy> vacancies) {
+		return null;
+	}
+
+	private void updateFile(String doc) {}
 }
