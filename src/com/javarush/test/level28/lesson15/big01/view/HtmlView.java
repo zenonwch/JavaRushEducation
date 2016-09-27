@@ -3,10 +3,13 @@ package com.javarush.test.level28.lesson15.big01.view;
 import com.javarush.test.level28.lesson15.big01.Controller;
 import com.javarush.test.level28.lesson15.big01.vo.Vacancy;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 public class HtmlView implements View {
-	private final String filePath = "./src/" + this.getClass().getPackage().getName().replace(".", "/") + "/vacancies.html";
+	private final String filePath = "./src/" + this.getClass().getPackage().getName().replace(".", File.pathSeparator) + "/vacancies.html";
 	private Controller controller;
 
 	@Override
@@ -32,5 +35,13 @@ public class HtmlView implements View {
 		return null;
 	}
 
-	private void updateFile(String doc) {}
+	private void updateFile(String doc) {
+		File file = new File(filePath);
+		try {
+			FileWriter fw = new FileWriter(file);
+			fw.write(doc);
+			fw.close();
+		}
+		catch (IOException ignored) {}
+	}
 }
