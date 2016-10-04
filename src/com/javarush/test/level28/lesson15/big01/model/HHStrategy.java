@@ -7,14 +7,28 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.text.DateFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class HHStrategy implements Strategy {
 	private static final String URL_FORMAT = "http://hh.ua/search/vacancy?text=java+%s&page=%d";
 	private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36";
 	private static final String REFERRER = "https://hh.ua/";
 	private static final int TIMEOUT = 5 * 1000;
+
+	private static DateFormatSymbols myDateFormatSymbols = new DateFormatSymbols(){
+		@Override
+		public String[] getMonths() {
+			return new String[]{"января", "февраля", "марта", "апреля", "мая", "июня",
+					"июля", "августа", "сентября", "октября", "ноября", "декабря"};
+		}
+	};
+
+	private static SimpleDateFormat format = new SimpleDateFormat("d\u00a0MMMM yyyy", myDateFormatSymbols);
 
 	@Override
 	public List<Vacancy> getVacancies(String searchString) {
@@ -38,10 +52,14 @@ public class HHStrategy implements Strategy {
 					vacancy.setCompanyName(el.select("[data-qa=vacancy-serp__vacancy-employer]").first().text());
 					vacancy.setSiteName(REFERRER);
 					vacancy.setUrl(el.select("[data-qa=vacancy-serp__vacancy-title]").first().attr("href"));
+					vacancy.setDate(format.parse(el.select("[data-qa=vacancy-serp__vacancy-date]").first().text() + " 2016"));
 					vacancies.add(vacancy);
 				}
 			}
 			catch (IOException ignored) {
+			}
+			catch (ParseException parseDateError) {
+				System.out.println(parseDateError.getCause());
 			}
 		}
 		return vacancies;

@@ -1,5 +1,7 @@
 package com.javarush.test.level28.lesson15.big01.vo;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 public class Vacancy {
@@ -9,6 +11,7 @@ public class Vacancy {
 	private String companyName;
 	private String siteName;
 	private String url;
+	private Calendar calendar = Calendar.getInstance();
 
 	public String getTitle() {
 		return title;
@@ -56,6 +59,14 @@ public class Vacancy {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public Date getDate() {
+		return calendar.getTime();
+	}
+
+	public void setDate(Date date) {
+		calendar.setTime(date);
 	}
 
 	@Override
