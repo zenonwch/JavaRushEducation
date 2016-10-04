@@ -62,7 +62,6 @@ public class Human implements Alive {
 		children.remove(child);
 	}
 
-	@Override
 	public void live() {}
 
 	public int getId() {
@@ -71,6 +70,14 @@ public class Human implements Alive {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getPosition() {
+		return "Человек";
+	}
+
+	public void printData() {
+		System.out.println(getPosition() + ": " + name);
 	}
 
 	public void printSize() {
