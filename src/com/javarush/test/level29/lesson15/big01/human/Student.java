@@ -1,7 +1,6 @@
 package com.javarush.test.level29.lesson15.big01.human;
 
 import java.util.Date;
-import java.util.List;
 
 public class Student extends Human {
 	private double averageGrade;
@@ -10,9 +9,7 @@ public class Student extends Human {
 	private Date endOfSession;
 
 	public Student(String name, int age, double averageGrade) {
-		super(false);
-		this.name = name;
-		this.age = age;
+		super(name, age);
 		this.averageGrade = averageGrade;
 	}
 

@@ -1,15 +1,11 @@
 package com.javarush.test.level29.lesson15.big01.human;
 
-import java.util.List;
-
 public class Teacher extends Human {
 	private int numberOfStudents;
 	private String university;
 
 	public Teacher(String name, int age, int numberOfStudents) {
-		super(false);
-		this.name = name;
-		this.age = age;
+		super(name, age);
 		this.numberOfStudents = numberOfStudents;
 	}
 
