@@ -1,9 +1,24 @@
 package com.javarush.test.level30.lesson15.big01;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Server {
+	private static Map<String, Connection> connectionMap = new ConcurrentHashMap<>();
+
+	public static void sendBroadcastMessage(Message message) {
+		try {
+			for (Map.Entry<String, Connection> pair : connectionMap.entrySet())
+				pair.getValue().send(message);
+		}
+		catch (IOException e) {
+			ConsoleHelper.writeMessage("Message was not sent!");
+		}
+	}
+
 	public static void main(String[] args) {
 		ConsoleHelper.writeMessage("Please enter port number.");
 		int port = ConsoleHelper.readInt();
@@ -17,7 +32,7 @@ public class Server {
 			}
 		}
 		catch (Exception e) {
-			System.out.println(e.getMessage());
+			ConsoleHelper.writeMessage(e.getMessage());
 		}
 	}
 
