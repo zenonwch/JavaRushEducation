@@ -6,6 +6,7 @@ import com.javarush.test.level30.lesson15.big01.Message;
 import com.javarush.test.level30.lesson15.big01.MessageType;
 
 import java.io.IOException;
+import java.net.Socket;
 
 public class Client {
 	protected Connection connection;
@@ -113,6 +114,20 @@ public class Client {
 				else if (message.getType() == MessageType.USER_REMOVED)
 					informAboutDeletingNewUser(message.getData());
 				else throw new IOException("Unexpected MessageType");
+			}
+		}
+
+		public void run() {
+			String serverAddress = getServerAddress();
+			int port = getServerPort();
+			try {
+				Socket socket = new Socket(serverAddress, port);
+				Client.this.connection = new Connection(socket);
+				clientHandshake();
+				clientMainLoop();
+			}
+			catch (IOException | ClassNotFoundException e) {
+				notifyConnectionStatusChanged(false);
 			}
 		}
 	}
