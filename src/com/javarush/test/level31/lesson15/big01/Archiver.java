@@ -1,5 +1,7 @@
 package com.javarush.test.level31.lesson15.big01;
 
+import com.javarush.test.level31.lesson15.big01.command.ExitCommand;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
@@ -15,6 +17,7 @@ public class Archiver {
 			System.out.println("Please enter full path to file you want to add to archive");
 			Path filePath = Paths.get(reader.readLine());
 			zipFileManager.createZip(filePath);
+			new ExitCommand().execute();
 		}
 		catch (Exception ignored) {
 		}
