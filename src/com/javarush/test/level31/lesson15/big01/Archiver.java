@@ -1,25 +1,35 @@
 package com.javarush.test.level31.lesson15.big01;
 
-import com.javarush.test.level31.lesson15.big01.command.ExitCommand;
+import com.javarush.test.level31.lesson15.big01.exception.WrongZipFileException;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.IOException;
 
 public class Archiver {
+	public static Operation askOperation() throws IOException {
+		ConsoleHelper.writeMessage("Выберите операцию:\n" +
+				"\t " + Operation.CREATE.ordinal() + " - упаковать файлы в архив\n" +
+				"\t " + Operation.ADD.ordinal() + " - добавить файл в архив\n" +
+				"\t " + Operation.REMOVE.ordinal() + " - удалить файл из архива\n" +
+				"\t " + Operation.EXTRACT.ordinal() + " - распаковать архив\n" +
+				"\t " + Operation.CONTENT.ordinal() + " - просмотреть содержимое архива\n" +
+				"\t " + Operation.EXIT.ordinal() + " - выход");
+		return Operation.values()[ConsoleHelper.readInt()];
+	}
+
 	public static void main(String[] args) {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-		try {
-			System.out.println("Please enter full path to zip archive");
-			Path zipFilePath = Paths.get(reader.readLine());
-			ZipFileManager zipFileManager = new ZipFileManager(zipFilePath);
-			System.out.println("Please enter full path to file you want to add to archive");
-			Path filePath = Paths.get(reader.readLine());
-			zipFileManager.createZip(filePath);
-			new ExitCommand().execute();
-		}
-		catch (Exception ignored) {
+		Operation operation = null;
+
+		while (operation != Operation.EXIT) {
+			try {
+				operation = askOperation();
+				CommandExecutor.execute(operation);
+			}
+			catch (WrongZipFileException ignored) {
+				ConsoleHelper.writeMessage("Вы не выбрали файл архива или выбрали неверный файл.");
+			}
+			catch (Exception ignored) {
+				ConsoleHelper.writeMessage("Произошла ошибка. Проверьте введенные данные.");
+			}
 		}
 	}
 }
