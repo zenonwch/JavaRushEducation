@@ -4,6 +4,8 @@ import com.javarush.test.level31.lesson15.big01.ConsoleHelper;
 import com.javarush.test.level31.lesson15.big01.FileProperties;
 import com.javarush.test.level31.lesson15.big01.ZipFileManager;
 
+import java.util.List;
+
 public class ZipContentCommand extends ZipCommand {
 	@Override
 	public void execute() throws Exception {
@@ -12,8 +14,11 @@ public class ZipContentCommand extends ZipCommand {
 		ZipFileManager zipFileManager = getZipFileManager();
 
 		ConsoleHelper.writeMessage("Содержимое архива:");
-		for(FileProperties fileProps : zipFileManager.getFilesList())
-			ConsoleHelper.writeMessage(fileProps.toString());
+
+		List<FileProperties> files = zipFileManager.getFilesList();
+		for (FileProperties file : files) {
+			ConsoleHelper.writeMessage(file.toString());
+		}
 
 		ConsoleHelper.writeMessage("Содержимое архива прочитано.");
 	}

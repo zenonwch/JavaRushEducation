@@ -4,6 +4,7 @@ import com.javarush.test.level31.lesson15.big01.exception.PathIsNotFoundExceptio
 import com.javarush.test.level31.lesson15.big01.exception.WrongZipFileException;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
@@ -77,6 +78,28 @@ public class ZipFileManager {
 		}
 
 		return files;
+	}
+
+	public void extractAll(Path outputFolder) throws Exception {
+		if (Files.notExists(outputFolder))
+			Files.createDirectories(outputFolder);
+
+		try (ZipInputStream zipInputStream = new ZipInputStream(Files.newInputStream(zipFile))) {
+			ZipEntry zipEntry = zipInputStream.getNextEntry();
+
+			while (zipEntry != null) {
+				Files.createDirectories(outputFolder.resolve(zipEntry.getName()).getParent());
+				if (zipEntry.isDirectory())
+					Files.createDirectory(outputFolder.resolve(zipEntry.getName()));
+				else{
+					try (OutputStream outputStream = Files.newOutputStream(outputFolder.resolve(zipEntry.getName()))) {
+						copyData(zipInputStream, outputStream);
+					}
+				}
+
+				zipEntry = zipInputStream.getNextEntry();
+			}
+		}
 	}
 
 	private void addNewZipEntry(ZipOutputStream zipOutputStream, Path filePath, Path fileName) throws Exception {
