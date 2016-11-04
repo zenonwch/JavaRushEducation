@@ -79,8 +79,27 @@ public class View extends JFrame implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-
+	public void actionPerformed(ActionEvent actionEvent) {
+		switch (actionEvent.getActionCommand()) {
+			case "Новый":
+				controller.createNewDocument();
+				break;
+			case "Открыть":
+				controller.openDocument();
+				break;
+			case "Сохранить":
+				controller.saveDocument();
+				break;
+			case "Сохранить как...":
+				controller.saveDocumentAs();
+				break;
+			case "Выход":
+				controller.exit();
+				break;
+			case "О программе":
+				showAbout();
+				break;
+		}
 	}
 
 	public void selectedTabChanged() {
@@ -135,6 +154,6 @@ public class View extends JFrame implements ActionListener {
 	}
 
 	public void showAbout() {
-		JOptionPane.showMessageDialog(this.getContentPane(), "Какой-то текст.", "О Программе", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(this.getContentPane(), "Моя первая поделка на Swing", "О Программе", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
