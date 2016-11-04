@@ -1,8 +1,10 @@
 package com.javarush.test.level32.lesson15.big01;
 
+import javax.swing.*;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 
@@ -74,7 +76,20 @@ public class Controller {
 	}
 
 	public void saveDocumentAs() {
-
+		view.selectHtmlTab();
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileFilter(new HTMLFileFilter());
+		int retrival = fileChooser.showSaveDialog(view);
+		if (retrival == JFileChooser.APPROVE_OPTION) {
+			currentFile = fileChooser.getSelectedFile();
+			view.setTitle(currentFile.getName());
+			try (FileWriter fw = new FileWriter(currentFile)) {
+				new HTMLEditorKit().write(fw, document, 0, document.getLength());
+			}
+			catch (Exception e) {
+				ExceptionHandler.log(e);
+			}
+		}
 	}
 
 	public static void main(String[] args) {
