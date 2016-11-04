@@ -20,6 +20,7 @@ public class Controller {
 	}
 
 	public void init() {
+		createNewDocument();
 	}
 
 	public void exit() {
@@ -56,16 +57,12 @@ public class Controller {
 		return sw.toString();
 	}
 
-	public static void main(String[] args) {
-		View view = new View();
-		Controller controller = new Controller(view);
-		view.setController(controller);
-		view.init();
-		controller.init();
-	}
-
 	public void createNewDocument() {
-
+		view.selectHtmlTab();
+		resetDocument();
+		view.setTitle("HTML редактор");
+		view.resetUndo();
+		currentFile = null;
 	}
 
 	public void openDocument() {
@@ -78,5 +75,13 @@ public class Controller {
 
 	public void saveDocumentAs() {
 
+	}
+
+	public static void main(String[] args) {
+		View view = new View();
+		Controller controller = new Controller(view);
+		view.setController(controller);
+		view.init();
+		controller.init();
 	}
 }
